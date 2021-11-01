@@ -3,7 +3,7 @@ package main
 type Score struct {
 	UserID string
 	GameID int
-	result int
+	Result int
 }
 
 func main() {
