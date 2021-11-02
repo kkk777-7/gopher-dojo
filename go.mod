@@ -1,3 +1,5 @@
-module github.com/kkk777-7/gopher-dojo
+module gopher-dojo
 
 go 1.17
+
+require github.com/tenntenn/greeting v1.0.0
