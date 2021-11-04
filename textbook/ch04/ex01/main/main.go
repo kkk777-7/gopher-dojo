@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"gopher-dojo/ch04/ex01/greeting"
+	"gopher-dojo/textbook/ch04/ex01/greeting"
 )
 
 func main() {
