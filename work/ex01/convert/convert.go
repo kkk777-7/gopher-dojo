@@ -21,7 +21,10 @@ func (i ImageFormat) Convert() error {
 	if err != nil {
 		return err
 	}
-	//fmt.Println(files)
+
+	if len(files) == 0 {
+		fmt.Println("There are no target files.")
+	}
 
 	for _, file := range files {
 		fs, err := os.Open(file)
@@ -36,7 +39,6 @@ func (i ImageFormat) Convert() error {
 		}
 
 		dstpath := changeSuffixFile(file, i.AfterFormat)
-		//fmt.Println(dstpath)
 		out, err := os.Create(dstpath)
 		if err != nil {
 			return err
