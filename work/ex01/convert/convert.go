@@ -3,37 +3,44 @@ package convert
 import (
 	"fmt"
 	"image"
+	"image/gif"
 	"image/jpeg"
-	_ "image/png"
+	"image/png"
 	"os"
 )
 
-type Options struct {
-	Quality int
-}
+func Convert(st string, dst string, pre string, after string) error {
 
-func Convert() {
-
-	word := os.Args[1]
-	fmt.Println(word)
-	file, err := os.Open(word)
+	file, err := os.Open(st)
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
 	defer file.Close()
-	fmt.Println(*file)
 
 	img, _, err := image.Decode(file)
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
-	dst := os.Args[2]
 	out, err := os.Create(dst)
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
 	defer out.Close()
 
-	jpeg.Encode(out, img, nil)
+	switch after {
+	case "jpg":
+		err = jpeg.Encode(out, img, nil)
+	case "jpeg":
+		err = jpeg.Encode(out, img, nil)
+	case "png":
+		err = png.Encode(out, img)
+	case "gif":
+		err = gif.Encode(out, img, nil)
+	}
+	if err != nil {
+		return err
+	}
+	fmt.Printf("convert: %s\n", out.Name())
 
+	return nil
 }
