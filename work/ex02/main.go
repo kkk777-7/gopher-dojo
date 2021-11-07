@@ -3,35 +3,35 @@ package main
 import (
 	"flag"
 	"fmt"
-	"gopher-dojo/work/ex01/convert"
+	"gopher-dojo/work/ex02/convert"
 	"log"
 )
 
+var SrcPath string
 var PreFormat string
 var AfterFormat string
 
 func init() {
+	flag.StringVar(&SrcPath, "path", ".", "the source directory")
 	flag.StringVar(&PreFormat, "p", "jpg", "pre image format")
 	flag.StringVar(&AfterFormat, "a", "png", "after image format")
-	flag.Parse()
 }
 
 func main() {
-	if len(flag.Args()) == 0 {
-		log.Fatal("Please input the target path!")
-	}
 
-	chk := checkFormat(flag.Args()[0], PreFormat, AfterFormat)
+	flag.Parse()
+	chk := CheckFormat(SrcPath, PreFormat, AfterFormat)
 	if chk {
-		i := convert.CreateImageFormat(flag.Args()[0], PreFormat, AfterFormat)
+		i := convert.CreateImageFormat(SrcPath, PreFormat, AfterFormat)
 		err := i.Convert()
 		if err != nil {
+			fmt.Printf("%T, %v\n", err, &err)
 			log.Fatal(err)
 		}
 	}
 }
 
-func checkFormat(path string, pre string, after string) bool {
+func CheckFormat(path string, pre string, after string) bool {
 	var prechk bool = false
 	var afterchk bool = false
 	var chk bool = true
