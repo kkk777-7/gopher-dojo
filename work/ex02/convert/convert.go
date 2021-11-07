@@ -26,14 +26,14 @@ type ImageFormat struct {
 // Input Value:  i ImageFormat
 //
 // Output Value:  error
-func (i ImageFormat) Convert() error {
+func (i *ImageFormat) Convert() error {
 	files, err := searchfile(i.Path, i.PreFormat)
 	if err != nil {
 		return err
 	}
 
 	if len(files) == 0 {
-		fmt.Println("There are no target files.")
+		return fmt.Errorf("there is no target file : %s", i.PreFormat)
 	}
 
 	for _, file := range files {
