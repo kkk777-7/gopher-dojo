@@ -1,3 +1,4 @@
+//Package convert image extension
 package convert
 
 import (
@@ -10,12 +11,21 @@ import (
 	"path/filepath"
 )
 
+// Target Image Format
 type ImageFormat struct {
-	Path        string
-	PreFormat   string
+	// Target Path
+	Path string
+	// Previous Image Extension
+	PreFormat string
+	// After Image Extension
 	AfterFormat string
 }
 
+// Convert convert the suffix of target files
+//
+// Input Value:  i ImageFormat
+//
+// Output Value:  error
 func (i ImageFormat) Convert() error {
 	files, err := searchfile(i.Path, i.PreFormat)
 	if err != nil {
@@ -63,6 +73,11 @@ func (i ImageFormat) Convert() error {
 	return nil
 }
 
+// CreateImageFormat creates struct of pointer for Image Format.
+//
+// Input Value:  path (string): Starting path, pre (string): Previous converted suffix, after (string): After converted suffix
+//
+// Output Value:  (*ImageFormat): Target Image Format
 func CreateImageFormat(path string, pre string, after string) *ImageFormat {
 	res := new(ImageFormat)
 	res.Path = path
@@ -71,12 +86,17 @@ func CreateImageFormat(path string, pre string, after string) *ImageFormat {
 	return res
 }
 
-func searchfile(path string, format string) ([]string, error) {
+// searchfile searches the path of target files.
+//
+// Input Value:  path (string): Starting path, format (string): Previous converted suffix
+//
+// Outout Value:  ([]string): Target files, error
+func searchfile(path string, pre string) ([]string, error) {
 	var files []string
 
 	err := filepath.Walk(path,
 		func(path string, info os.FileInfo, err error) error {
-			if filepath.Ext(path) == "."+format {
+			if filepath.Ext(path) == "."+pre {
 				files = append(files, path)
 			}
 			return nil
@@ -84,6 +104,11 @@ func searchfile(path string, format string) ([]string, error) {
 	return files, err
 }
 
+// changeSuffixFile changes suffix of the target path.
+//
+// Input Value:  file (string): The Target Path of File, format (string): The specified suffix
+//
+// Output Value:  (string): Changed Path of File
 func changeSuffixFile(file string, format string) string {
 	suffix := filepath.Ext(file)
 	newfile := file[:len(file)-len(suffix)+1] + format
