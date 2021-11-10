@@ -3,6 +3,7 @@ package typing
 import (
 	"bufio"
 	"fmt"
+	"gopher-dojo/work/ex03/words"
 	"io"
 	"os"
 	"time"
@@ -15,10 +16,11 @@ func Typing(t *time.Duration) {
 	fmt.Println("--------------")
 	ch := input(os.Stdin)
 	for {
-		fmt.Print("test->")
+		word := words.Words()
+		fmt.Print(word + "->")
 		select {
 		case res := <-ch:
-			chk := checkInput("test", res)
+			chk := checkInput(word, res)
 			if chk {
 				cnt++
 			}
