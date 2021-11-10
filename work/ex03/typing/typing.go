@@ -3,8 +3,8 @@ package typing
 import (
 	"bufio"
 	"fmt"
-	"gopher-dojo/work/ex03/words"
 	"io"
+	"math/rand"
 	"os"
 	"time"
 )
@@ -12,11 +12,12 @@ import (
 func Typing(t *time.Duration) {
 	var cnt int
 
+	limit := time.After(*t)
 	fmt.Println("Start!!!")
 	fmt.Println("--------------")
 	ch := input(os.Stdin)
 	for {
-		word := words.Words()
+		word := words()
 		fmt.Print(word + "->")
 		select {
 		case res := <-ch:
@@ -24,7 +25,7 @@ func Typing(t *time.Duration) {
 			if chk {
 				cnt++
 			}
-		case <-time.After(*t):
+		case <-limit:
 			fmt.Println()
 			fmt.Println("--------------")
 			fmt.Println("Finish!!")
@@ -55,4 +56,21 @@ func checkInput(w string, input string) bool {
 		fmt.Println("Bad!")
 	}
 	return chk
+}
+
+func words() string {
+	words := []string{
+		"kota",
+		"kimura",
+		"ririko",
+		"nakaoka",
+		"tabetai",
+		"yakiniku",
+	}
+
+	rand.Seed(time.Now().UnixNano())
+	i := rand.Intn(len(words))
+
+	word := words[i]
+	return word
 }
