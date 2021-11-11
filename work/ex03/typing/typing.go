@@ -61,11 +61,10 @@ func checkInput(w string, input string) bool {
 func words() string {
 	words := []string{
 		"kota",
-		"kimura",
 		"ririko",
-		"nakaoka",
-		"tabetai",
-		"yakiniku",
+		"poyopoyo",
+		"hogehoge",
+		"suki",
 	}
 
 	rand.Seed(time.Now().UnixNano())
