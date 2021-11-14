@@ -37,3 +37,16 @@ $ make
 ```
 $ make clean
 ```
+### ディレクトリ構成
+```
+.
+├── README.md
+├── myxargs # コマンドライン
+│   ├── main.go
+│   └── mycmd
+│       └──cmd.go
+├── testdata
+│   └── 
+├── go.mod
+└── makefile
+```
